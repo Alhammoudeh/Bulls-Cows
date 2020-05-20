@@ -19,22 +19,8 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
     }
     else // Checking Player Guess
     {
-        //Player receives winning message
-        if (Input == HiddenWord)
-        {
-            PrintLine(TEXT("Congratulations! You have guessed the word\ncorrectly."));
-            EndGame();
-        }
-        else
-        {
-            ProcessGuess(Input);
-        }
+        ProcessGuess(Input);
     }
-
-
-    // Check if word is isogram
-    //Ask player if they want to play again
-
 }
 
 void UBullCowCartridge::SetupGame()
@@ -56,29 +42,42 @@ void UBullCowCartridge::SetupGame()
 void UBullCowCartridge::EndGame()
 {
     bGameOver = true;
+    //Ask player if they want to play again
     PrintLine(TEXT("Press enter to play again..."));
     
 }
 
 void UBullCowCartridge::ProcessGuess(FString Guess)
 {
+    //Player receives winning message
+    if (Guess == HiddenWord)
+    {
+        PrintLine(TEXT("Congratulations! You have guessed the word\ncorrectly."));
+        EndGame();
+        return;
+    }
+
+     // Check if Guess is Isogram
+     //if(!IsIsogram)
+     //{
+     //    PrintLine(TEXT("There are no repeating letters. Please try again..."));
+     //   return;
+     //}
+
     if (Guess.Len() != HiddenWord.Len()) {
         PrintLine(FString::Printf(TEXT("The Hidden Word is %i characters long.\nNo lives will be removed.\nPlease try again..."), HiddenWord.Len()));
+        return;
     }
-    else
+
+    --Lives;
+
+    if (Lives <= 0)
     {
-        --Lives;
-
-        //Check if lives is less than or equal to 0
-        if (Lives <= 0)
-        {
-            PrintLine(TEXT("Game Over! The Hidden Word is " + HiddenWord));
-            EndGame();
-        }
-        else {
-            ClearScreen();
-            PrintLine(TEXT("Sorry, that is incorrect.\nYou have %i lives remaining.\nPlease try again..."), Lives);
-        }
-
+        PrintLine(TEXT("Game Over! The Hidden Word is " + HiddenWord));
+        EndGame();
+        return;
     }
+
+    ClearScreen();
+    PrintLine(TEXT("Sorry, that is incorrect.\nYou have %i lives remaining.\nPlease try again..."), Lives);
 }
