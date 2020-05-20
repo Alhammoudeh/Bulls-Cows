@@ -22,32 +22,12 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
         //Player receives winning message
         if (Input == HiddenWord)
         {
-            PrintLine(TEXT("Congratulations! You have guessed the word correctly."));
+            PrintLine(TEXT("Congratulations! You have guessed the word\ncorrectly."));
             EndGame();
         }
         else
         {
-            if (Input.Len() != HiddenWord.Len()) {
-                PrintLine(FString::Printf(TEXT("The Hidden Word is %i characters long.\nNo lives will be removed.\nPlease try again..."), HiddenWord.Len()));
-            }
-            else 
-            {
-                --Lives;
-
-                //Check if lives is less than or equal to 0
-                if (Lives <= 0)
-                {
-                    PrintLine(TEXT("Game Over! The Hidden Word is " + HiddenWord));
-                    EndGame();
-                }
-                else {
-                    ClearScreen();
-                    PrintLine(TEXT("Sorry, that is incorrect.\nYou have %i lives remaining.\nPlease try again..."), Lives);
-                }
-
-            }
-
-
+            ProcessGuess(Input);
         }
     }
 
@@ -78,4 +58,27 @@ void UBullCowCartridge::EndGame()
     bGameOver = true;
     PrintLine(TEXT("Press enter to play again..."));
     
+}
+
+void UBullCowCartridge::ProcessGuess(FString Guess)
+{
+    if (Guess.Len() != HiddenWord.Len()) {
+        PrintLine(FString::Printf(TEXT("The Hidden Word is %i characters long.\nNo lives will be removed.\nPlease try again..."), HiddenWord.Len()));
+    }
+    else
+    {
+        --Lives;
+
+        //Check if lives is less than or equal to 0
+        if (Lives <= 0)
+        {
+            PrintLine(TEXT("Game Over! The Hidden Word is " + HiddenWord));
+            EndGame();
+        }
+        else {
+            ClearScreen();
+            PrintLine(TEXT("Sorry, that is incorrect.\nYou have %i lives remaining.\nPlease try again..."), Lives);
+        }
+
+    }
 }
