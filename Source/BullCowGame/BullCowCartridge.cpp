@@ -12,41 +12,35 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
 {
-    // if game is over ClearScreen() and SetupGame() the game
-    // else Checking PlayerGuess
-
     if (bGameOver) 
     {
         ClearScreen();
         SetupGame();
     }
-    else {
+    else // Checking Player Guess
+    {
         //Player receives winning message
-        if (Input == HiddenWord) {
+        if (Input == HiddenWord) 
+        {
             PrintLine(TEXT("Congratulations! You have guessed the word correctly."));
-            bGameOver = true;
+            EndGame();
         }
-
-        //Player receives game over message
         else
         {
             if (Input.Len() != HiddenWord.Len()) {
-                PrintLine(FString::Printf(TEXT("The Hidden Word is %i characters long, try again!"), HiddenWord.Len()));
+                PrintLine(FString::Printf(TEXT("The Hidden Word is %i characters long. Game over!"), HiddenWord.Len()));
+                EndGame();
 
             }
 
             --Lives;
 
-            PrintLine(FString::Printf(TEXT(" The number of lives remaining is %i"), Lives));
-
             //Check if lives is 0
             if (Lives > 0)
             {
                 PrintLine(TEXT("Game Over! The Hidden Word is " + HiddenWord));
+                EndGame();
             }
-
-            //Show player the number of lives
-            //Ask player to guess again
         }
 
     }
