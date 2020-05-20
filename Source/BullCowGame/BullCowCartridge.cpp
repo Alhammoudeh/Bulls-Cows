@@ -29,7 +29,7 @@ void UBullCowCartridge::SetupGame()
     PrintLine(TEXT("Hi, Welcome to Bulls & Cows!"));;
    
     
-    HiddenWord = TEXT("abouts");
+    HiddenWord = TEXT("about");
     Lives = HiddenWord.Len(); // number of lives is dependent on the length of word
     bGameOver = false;
 
@@ -37,6 +37,8 @@ void UBullCowCartridge::SetupGame()
     PrintLine(TEXT("Guess the %i letter word!"), HiddenWord.Len());
     PrintLine(TEXT("You have %i lives."), Lives);
     PrintLine(TEXT("Please provide us with your guess and\npress enter to continue..."));
+
+    //PrintLine(TEXT("The first character of the hidden word is:%c"), HiddenWord[0]); // print "a"
 }
 
 void UBullCowCartridge::EndGame()
@@ -57,15 +59,15 @@ void UBullCowCartridge::ProcessGuess(FString Guess)
         return;
     }
 
-     // Check if Guess is Isogram
-     //if(!IsIsogram)
-     //{
-     //    PrintLine(TEXT("There are no repeating letters. Please try again..."));
-     //   return;
-     //}
-
     if (Guess.Len() != HiddenWord.Len()) {
-        PrintLine(FString::Printf(TEXT("The Hidden Word is %i characters long.\nNo lives will be removed.\nPlease try again..."), HiddenWord.Len()));
+        PrintLine(FString::Printf(TEXT("The Hidden Word is %i letters long.\nNo lives will be removed.\nPlease try again..."), HiddenWord.Len()));
+        return;
+    }
+
+    // Check if Guess is Isogram
+    if (!IsIsogram(Guess))
+    {
+        PrintLine(TEXT("There are no repeating letters for this word. Please try again..."));
         return;
     }
 
@@ -80,4 +82,18 @@ void UBullCowCartridge::ProcessGuess(FString Guess)
 
     ClearScreen();
     PrintLine(TEXT("Sorry, that is incorrect.\nYou have %i lives remaining.\nPlease try again..."), Lives);
+}
+
+bool UBullCowCartridge::IsIsogram(FString Word) const
+{
+    // Check each character for repeats
+        // For each letter in Guess
+        // Start from first element to final element
+        // Compare element with next element
+        // repeat until we reach Guess.Len() - 1
+    // return True if no repeating
+    // else return False if repeating
+
+    return true;
+
 }
