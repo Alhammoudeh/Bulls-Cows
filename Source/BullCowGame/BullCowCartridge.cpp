@@ -8,6 +8,11 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 
     SetupGame();
 
+    PrintLine(TEXT("The number of words to choose from is %i"), Words.Num());
+
+    for (int i = 0; i < 5; i++) {
+        PrintLine(Words[i]);
+    }
     PrintLine(TEXT("The Hidden Word is: %s"), *HiddenWord); //Debug Line
 }
 
@@ -38,8 +43,6 @@ void UBullCowCartridge::SetupGame()
     PrintLine(TEXT("Guess the %i letter word!"), HiddenWord.Len());
     PrintLine(TEXT("You have %i lives."), Lives);
     PrintLine(TEXT("Please provide us with your guess and\npress enter to continue..."));
-
-    //PrintLine(TEXT("The first character of the hidden word is:%c"), HiddenWord[0]); // print "a"
 }
 
 void UBullCowCartridge::EndGame()
