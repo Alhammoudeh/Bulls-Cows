@@ -6,14 +6,14 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
 
+    TArray<FString> ValidWords = GetValidWords(Words);
+
     SetupGame();
 
     PrintLine(TEXT("The number of words to choose from is %i"), Words.Num());
-
-    for (int32 i = 0; i < 5; i++) {
-        PrintLine(TEXT("%s"), *Words[i]);
-    }
+    PrintLine(TEXT("The number of valid words is %i"), ValidWords.Num());
     PrintLine(TEXT("The Hidden Word is: %s"), *HiddenWord); //Debug Line
+
 }
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
@@ -113,4 +113,19 @@ bool UBullCowCartridge::IsIsogram(FString Word) const
     // repeat until we reach Guess.Len() - 1
     // return True if no repeating
     // else return False if repeating
+}
+
+TArray<FString> UBullCowCartridge::GetValidWords(TArray<FString> WordList) const
+{
+    TArray<FString> ValidWords;
+
+    for (FString Word : WordList) 
+    {
+        if (Word.Len() >= 4 && Word.Len() <= 8 && IsIsogram(Word))
+        {
+            ValidWords.Emplace(Word);
+        }
+    }
+
+    return ValidWords;
 }
