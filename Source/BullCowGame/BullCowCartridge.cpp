@@ -10,8 +10,8 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 
     PrintLine(TEXT("The number of words to choose from is %i"), Words.Num());
 
-    for (int i = 0; i < 5; i++) {
-        PrintLine(Words[i]);
+    for (int32 i = 0; i < 5; i++) {
+        PrintLine(TEXT("%s"), *Words[i]);
     }
     PrintLine(TEXT("The Hidden Word is: %s"), *HiddenWord); //Debug Line
 }
