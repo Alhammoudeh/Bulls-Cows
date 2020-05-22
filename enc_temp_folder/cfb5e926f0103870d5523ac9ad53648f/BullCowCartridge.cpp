@@ -37,9 +37,9 @@ void UBullCowCartridge::SetupGame()
 
 
     PrintLine(TEXT("Guess the %i letter word!"), HiddenWord.Len());
-    //PrintLine(TEXT("The Hidden Word is: %s"), *HiddenWord); //Debug Line
     PrintLine(TEXT("You have %i lives."), Lives);
     PrintLine(TEXT("Please provide us with your guess and\npress enter to continue..."));
+    PrintLine(TEXT("The Hidden Word is: %s"), *HiddenWord); //Debug Line
 }
 
 void UBullCowCartridge::EndGame()
@@ -93,12 +93,14 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
 
 bool UBullCowCartridge::IsIsogram(const FString& Word) const
 {
+    // int32 Index = 0;
+    // int32 Comparison = Index + 1;
 
-    for (int32 Index = 0; Index < Word.Len(); Index++)
+    for (int32 i = 0; i < Word.Len(); i++)
     {
-        for (int32 Compare = Index + 1; Compare < Word.Len(); Compare++)
+        for (int32 j = i + 1; j < Word.Len(); j++)
         {
-            if (Word[Index] == Word[Compare]) {
+            if (Word[i] == Word[j]) {
                 return false;
             }
         }
@@ -139,17 +141,20 @@ void UBullCowCartridge::GetBullCows(const FString& Guess, int32& BullCounter, in
     // for every index of guess is the same as index of hidden word: BullCounter++
     // if not a Bull, was it a cow? If yes: CowCounter++
 
-    for (int32 GIndex = 0; GIndex < Guess.Len(); GIndex++)
+    // int32 GIndex = 0;
+    // int32 HIndex = GIndex + 1;
+
+    for (int32 i = 0; i < Guess.Len(); i++)
     {
-        if (Guess[GIndex] == HiddenWord[GIndex])
+        if (Guess[i] == HiddenWord[i])
         {
             BullCounter++;
             continue;
         }
 
-        for (int32 HIndex = 0; HIndex < Guess.Len(); HIndex++)
+        for (int32 j = 0; j < Guess.Len(); j++)
         {
-            if (Guess[GIndex] == HiddenWord[HIndex]) 
+            if (Guess[i] == HiddenWord[j]) 
             {
                 CowCounter++;
             }
