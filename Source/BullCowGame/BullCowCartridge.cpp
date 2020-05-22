@@ -83,10 +83,9 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
     }
 
     //Show player Bulls and Cows count
-    int32 Bulls, Cows;
-    GetBullCows(Guess, Bulls, Cows);
+    FBullCowCounter Counter = GetBullCows(Guess);
 
-    PrintLine(TEXT("You have %i Bulls and %i Cows"), Bulls, Cows);
+    PrintLine(TEXT("You have %i Bulls and %i Cows"), Counter.Bulls, Counter.Cows);
 
     PrintLine(TEXT("Sorry, that is incorrect.\nYou have %i lives remaining.\nPlease try again..."), Lives);
 }
@@ -107,13 +106,6 @@ bool UBullCowCartridge::IsIsogram(const FString& Word) const
     return true;
 
     // update to check for case sensitivity
-    // Check each character for repeats
-    // For each letter in Guess
-    // Start from first element to final element
-    // Compare element with next element
-    // repeat until we reach Guess.Len() - 1
-    // return True if no repeating
-    // else return False if repeating
 }
 
 TArray<FString> UBullCowCartridge::GetValidWords(const TArray<FString>& WordList) const
@@ -131,19 +123,15 @@ TArray<FString> UBullCowCartridge::GetValidWords(const TArray<FString>& WordList
     return ValidWords;
 }
 
-void UBullCowCartridge::GetBullCows(const FString& Guess, int32& BullCounter, int32& CowCounter) const
+FBullCowCounter UBullCowCartridge::GetBullCows(const FString& Guess) const
 {
-    BullCounter = 0;
-    CowCounter = 0;
-
-    // for every index of guess is the same as index of hidden word: BullCounter++
-    // if not a Bull, was it a cow? If yes: CowCounter++
+    FBullCowCounter Counter;
 
     for (int32 GIndex = 0; GIndex < Guess.Len(); GIndex++)
     {
         if (Guess[GIndex] == HiddenWord[GIndex])
         {
-            BullCounter++;
+            Counter.Bulls;
             continue;
         }
 
@@ -151,8 +139,10 @@ void UBullCowCartridge::GetBullCows(const FString& Guess, int32& BullCounter, in
         {
             if (Guess[GIndex] == HiddenWord[HIndex]) 
             {
-                CowCounter++;
+                Counter.Cows++;
+                break;
             }
         }
     }
+    return Counter;
 }
