@@ -37,7 +37,7 @@ void UBullCowCartridge::SetupGame()
 
 
     PrintLine(TEXT("Guess the %i letter word!"), HiddenWord.Len());
-    //PrintLine(TEXT("The Hidden Word is: %s"), *HiddenWord); //Debug Line
+    PrintLine(TEXT("The Hidden Word is: %s"), *HiddenWord); //Debug Line
     PrintLine(TEXT("You have %i lives."), Lives);
     PrintLine(TEXT("Please provide us with your guess and\npress enter to continue..."));
 }
@@ -131,7 +131,7 @@ FBullCowCounter UBullCowCartridge::GetBullCows(const FString& Guess) const
     {
         if (Guess[GIndex] == HiddenWord[GIndex])
         {
-            Counter.Bulls;
+            Counter.Bulls++;
             continue;
         }
 
